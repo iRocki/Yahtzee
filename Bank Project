@@ -1,0 +1,269 @@
+import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
+
+public class bankMachine {
+
+	public static void main(String[] args) throws InterruptedException {
+		// This is so input will not get a error that it has never been used
+		@SuppressWarnings("resource")
+		Scanner input = new Scanner(System.in);
+		// Float for the Balance
+		float bal = 0;
+		// Log in Screen
+		System.out.println("|----------------------------------|");
+		System.out.println("|       Welcome to Maze Bank       |");
+		System.out.println("|    Serving America since 1966    |");
+		System.out.println("|        Press [3] to login        |");
+		System.out.println("|       Press [2] to register      |");
+		System.out.println("|        Press [1] to quit         |");
+		System.out.println("|----------------------------------|");
+		int setting = 0;
+		try {
+			setting = input.nextInt();
+		} catch (java.util.InputMismatchException e) {
+			System.out.println("Invalid option, please restart the program");
+		}
+		// Switch Statement for the menu
+		switch (setting) {
+		// Case 1 if the user would like to quit the program
+		case 1:
+
+			while (setting == 1) {
+				System.out.println("Thank you for choosing Maze Bank!");
+				System.out.println("We hope to see you again!");
+				return;
+			}
+			// Registration screen
+		case 2:
+			int creditcard = 0;
+
+			while (setting == 2) {
+
+				System.out.println("Please enter a 6-digit number");
+				try {
+					creditcard = input.nextInt();
+				} catch (java.util.InputMismatchException e) {
+					System.out.print("Invalid bank account number, please restart the program");
+					return;
+				}
+
+				// If they put a bank account number of 000000 it is invalid
+
+				if (creditcard > 100000 && creditcard < 999999)
+					System.out.println("Please enter your last name");
+				String name1 = input.next();
+				System.out.println("The name for your account number is " + name1);
+				TimeUnit.SECONDS.sleep(1);
+				System.out.println("Your account number is " + creditcard);
+				TimeUnit.SECONDS.sleep(1);
+				break;
+			}
+
+			// Log in screen
+		case 3:
+			if (setting == 3) {
+				System.out.println("Please enter your credit card number");
+				int creditcard1;
+				try {
+					creditcard1 = input.nextInt();
+				} catch (Exception e) {
+					System.out.print("Invalid bank account number, please restart the program");
+					return;
+				}
+
+				// If they put a bank account number of 000000 it is invalid
+				if (creditcard1 <= 100000) {
+					System.out.print("Invalid bank account number, please try again");
+					creditcard1 = input.nextInt();
+				}
+				while (creditcard1 >= 999999) {
+					System.out.print("Invalid bank account number, please try again");
+					creditcard1 = input.nextInt();
+
+				}
+			}
+			// Logging in screen
+			else
+
+				TimeUnit.SECONDS.sleep(1);
+			System.out.println("Checking your details");
+			TimeUnit.SECONDS.sleep(1);
+			System.out.println("Logging in...");
+			TimeUnit.SECONDS.sleep(1);
+			System.out.println("Approved");
+			TimeUnit.SECONDS.sleep(1);
+			System.out.println("Please enter your sur-name");
+
+			String name = input.next();
+
+			System.out.println("Loading please standby...");
+			TimeUnit.SECONDS.sleep(3);
+			int option = 0;
+
+			// Do statement for the menu
+
+			do {
+				System.out.println("            Welcome Mr. " + name);
+				System.out.println("|----------------------------------------|");
+				System.out.println("|               Main Menu                |");
+				System.out.println("|    Thank you for choosing Maze Bank    |");
+				System.out.println("      Your current balance is $" + bal);
+				System.out.println("|       Press [4] to deposit money       |");
+				System.out.println("|         Press [5] to withdraw money    |");
+				System.out.println("|       Press [6] to log off             |");
+				System.out.println("|----------------------------------------|");
+
+				try {
+					option = input.nextInt();
+				} catch (Exception e) {
+					System.out.println("Invalid option, please restart the program");
+					return;
+				}
+				float deposit;
+				// If the user would like to deposit a certain amount of money
+				if (option == 4) {
+					System.out.println("How much money would you like deposit?");
+					try {
+						deposit = input.nextFloat();
+					} catch (Exception e) {
+						System.out.print("Invalid deposit number, please restart the program");
+						return;
+					}
+					// Error if the user enters an invalid amount
+					if (deposit < 0) {
+						System.out.println("Error, you cannot deposit that amount.");
+						System.out.print("Please enter a valid amount");
+						deposit = input.nextInt();
+					}
+					// Processing the deposit
+					if (deposit > 0) {
+						System.out.println("We are processing your request, please wait...");
+						TimeUnit.SECONDS.sleep(2);
+						System.out.format("You have deposited $" + deposit + "\n");
+						bal += deposit;
+						System.out.println("Your new balance is $" + bal);
+						System.out.println("Press [1] to return to the main menu");
+						try {
+							option = input.nextInt();
+						} catch (java.util.InputMismatchException e) {
+							System.out.println("Invalid option, please restart the program");
+							return;
+						}
+
+						// If the user enters an invalid amount multiple times
+						// they will be kicked
+					}
+					if (deposit < 0) {
+						System.out.println("You have inputed an invalid amount too many times.");
+						System.out.println("Press [1] to return to the main menu");
+						option = input.nextInt();
+
+					}
+
+				}
+				// If the user would like to log out
+				if (option == 6) {
+					System.out.println("Logging out...");
+					TimeUnit.SECONDS.sleep(2);
+					// Exit message
+					System.out.println("Thank you for choosing Maze Bank!");
+					System.out.println("We hope to see you again!");
+					System.exit(0);
+				}
+				// When the user wants to log out
+				if (option == 5 && bal <= 0) {
+					System.out.println("You don't have any money to withdraw");
+					System.out.println("Press [1] to return to the home screen");
+					try {
+						option = input.nextInt();
+					} catch (java.util.InputMismatchException e) {
+						System.out.println("Invalid option, please restart the program");
+						return;
+					}
+				}
+				// If the user would like to withdraw
+				float withdraw;
+				if (option == 5 && bal > 0) {
+					System.out.println("Loading...");
+					TimeUnit.SECONDS.sleep(1);
+					System.out.println("..........");
+					TimeUnit.SECONDS.sleep(1);
+					System.out.println("How much money would you like to withdraw?");
+					try {
+						withdraw = input.nextFloat();
+					} catch (java.util.InputMismatchException e) {
+						System.out.println("Invalid withdraw amount, please restart the program");
+						return;
+					}
+
+					// If the user enters an invalid amount
+					if (withdraw < 0) {
+						System.out.println("You entered an invalid amount, please try again.");
+						try {
+							withdraw = input.nextFloat();
+						} catch (java.util.InputMismatchException e) {
+							System.out.println("Invalid withdraw amount, please restart the program");
+							return;
+						}
+					}
+					// Also if the user enters an invalid amount
+					if (withdraw < 0) {
+						System.out.println("You have inputed an invalid amount too many times.");
+						System.out.println(
+								"Your account has been temporarily suspended, please contact the front desk for further assistance. ");
+						System.out.println("Sorry for the inconvenience thank you for choosing Maze Bank.");
+						break;
+					}
+					// If the user tries to withdraw more then the balance
+					while (withdraw > bal) {
+						System.out.println("Error, you cannot withdraw more than $" + bal);
+						try {
+							withdraw = input.nextFloat();
+						} catch (java.util.InputMismatchException e) {
+							System.out.println("Invalid withdraw amount, please restart the program");
+							return;
+						}
+					}
+					// If the user enters an invalid amount to many times they
+					// will get kicked from the program
+					if (withdraw < 0) {
+						System.out.println("You have inputed an invalid amount too many times.");
+						System.out.println(
+								"Your account has been temporarily suspended, please contact the front desk for further assistance. ");
+						System.out.println("Sorry for the inconvenience thank you for choosing Maze Bank.");
+						break;
+					}
+					// Same as above
+					if (withdraw > bal) {
+						System.out.println("You have inputed an invalid amount too many times.");
+						System.out.println(
+								"Your account has been temporarily suspended, please contact the front desk for further assistance. ");
+						System.out.println("Sorry for the inconvenience thank you for choosing Maze Bank.");
+						break;
+					}
+					// Processing the withdraw
+					bal -= withdraw;
+					System.out.println("You have withdrawn $" + withdraw + ". Thank you.");
+					System.out.println("Press [1] to return to the main menu");
+					option = input.nextInt();
+					// If the user enters an invalid amount multiple times
+					if (withdraw < 0) {
+						System.out.println("You have inputed an invalid amount too many times.");
+						System.out.println("Press [1] to return to the main menu");
+						try {
+							option = input.nextInt();
+						} catch (Exception e) {
+							System.out.println("Invalid option, please restart the program");
+							return;
+						}
+					}
+				}
+				// While for the do while
+			} while (option != 6);
+
+		}
+
+	}
+
+}
+
